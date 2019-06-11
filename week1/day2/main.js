@@ -51,7 +51,6 @@ function pushFront(array, value) {
 
 // pushFront(numbers, 9999);
 
-
 function insertAt(array, position, value) {
 
   for (var index = array.length; index > position; index--) {
