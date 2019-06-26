@@ -8,7 +8,7 @@ class Node {
   }
 
   add2(node) {
-    console.log('add2 in node object', node, this);
+    // console.log('add2 in node object', node, this);
     if (node.value < this.value) {
       // go left 
       if (this.left) {
@@ -26,6 +26,73 @@ class Node {
         this.right = node;
       }
     }
+  }
+
+  contains(value) {
+    console.log('llooking for value ' + value, "current value is " + this.value);
+
+    if (this.value === value) {
+      return true;
+    }
+
+    if (value < this.value) {
+      // go left 
+      if (this.left) {
+        return this.left.contains(value);
+      }
+    } else {
+      // go right 
+      if (this.right) {
+        return this.right.contains(value);
+      }
+    }
+
+    return false;
+  }
+
+  print() {
+    // console.log('moving.. .on node with value ' + this.value);
+    if (this.left) {
+      // go left 
+      this.left.print();
+    }
+
+    console.log('node has value ' + this.value);
+
+    if (this.right) {
+      this.right.print();
+    }
+  }
+
+  min() {
+    return this.left ? this.left.min() : this.value;
+    // (evaluate expression) ?(if true) : (if false);
+    // if (this.left) {
+    //   return this.left.min();
+    // }
+
+    // return this.value;
+  }
+
+  max() {
+    return this.right ? this.right.max() : this.value;
+  }
+
+  size() {
+    console.log("size in node with value " + this.value);
+    let count = 1;
+
+    if (this.left) {
+      count += this.left.size();
+      // count++;
+    }
+
+    if (this.right) {
+      count += this.right.size();
+      // count++;
+    }
+    console.log('our count is ' + count, "current node is " + this.value);
+    return count;
   }
 }
 
@@ -86,6 +153,47 @@ class Tree {
       this.root = node;
     }
   }
+
+  isEmpty() {
+    return this.root === null;
+    // if (this.root === null) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  }
+
+  contains(value) {
+    if (this.isEmpty()) {
+      return false;
+    }
+
+    return this.root.contains(value);
+  }
+
+  print() {
+    if (this.isEmpty()) {
+      return "tree is empty";
+    }
+
+    return this.root.print();
+  }
+
+  min() {
+    if (this.isEmpty()) {
+      return null;
+    }
+
+    return this.root.min();
+  }
+
+  max() {
+    return this.isEmpty() ? null : this.root.max();
+  }
+
+  size() {
+    return this.isEmpty() ? 0 : this.root.size();
+  }
 }
 
 const tree = new Tree();
@@ -100,5 +208,6 @@ tree.add2(30);
 tree.add2(11);
 tree.add2(25);
 tree.add2(45);
+tree.add2(3);
 
-console.log(tree)
+console.log(tree.size());
